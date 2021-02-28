@@ -1,8 +1,10 @@
 package com.tjoeun.android.studentlist_20210221
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.tjoeun.android.studentlist_20210221.adapters.StudentAdapter
 import com.tjoeun.android.studentlist_20210221.datas.Student
 import kotlinx.android.synthetic.main.activity_main.*
@@ -75,11 +77,22 @@ class MainActivity : AppCompatActivity() {
         //    val std = mStudentList[position]
         //    Toast.makeText(this, "${std.name} 길게눌림", Toast.LENGTH_SHORT).show()
 
-            // 목록에서 해당위치의 학생 제거
-            mStudentList.removeAt(position)
+            // 진짜 삭제를 진행하기 전에 최종확인
+            val alert = AlertDialog.Builder(this)
+            alert.setTitle("삭제확인")
+            alert.setMessage("정말 해당 학생을 삭제하시겠습니까?")
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialog, which ->
+                //확인 버튼이 눌리면 할 일 -> 진짜 삭제 진행
 
-            //리스트뷰의 어뎁터에게 알림전달 => 새로고침 요청
-            mAdapter.notifyDataSetChanged()
+                // 목록에서 해당위치의 학생 제거
+                mStudentList.removeAt(position)
+
+                //리스트뷰의 어뎁터에게 알림전달 => 새로고침 요청
+                mAdapter.notifyDataSetChanged()
+            })
+
+            alert.setNegativeButton("취소", null)
+            alert.show()
 
 
             // true - 롱클릭 전용  false - 손 뗄때 일반클릭도 처리  -> 일반적으로 true
