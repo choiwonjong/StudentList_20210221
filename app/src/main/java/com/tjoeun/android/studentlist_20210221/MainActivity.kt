@@ -62,17 +62,22 @@ class MainActivity : AppCompatActivity() {
 
         // 리스트뷰의 각 줄이 눌린경우
         studentListView.setOnItemClickListener { parent, view, position, id ->
-            // posion : 눌린줄
+            // posion : 눌린줄 위치
 
             // 클릭된 학생의 이름을 토스트로
-
             val clickStudent = mStudentList[position]
-
             Toast.makeText(this, clickStudent.name, Toast.LENGTH_SHORT).show()
 
+        }
 
+        studentListView.setOnItemLongClickListener { parent, view, position, id ->
 
+            val std = mStudentList[position]
+            Toast.makeText(this, "${std.name} 길게눌림", Toast.LENGTH_SHORT).show()
 
+            // true - 롱클릭 전용
+            //  return@setOnItemLongClickListener false
+            return@setOnItemLongClickListener true
         }
 
     }
