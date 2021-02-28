@@ -2,12 +2,17 @@ package com.tjoeun.android.studentlist_20210221
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.tjoeun.android.studentlist_20210221.adapters.StudentAdapter
 import com.tjoeun.android.studentlist_20210221.datas.Student
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     // 실제 학생들 목록을 담아줄 목록변수
     val mStudentList = ArrayList<Student>()
+
+    //리스트뷰의 각각의 줄을 실제로 뿌려줄 어댑터변수.
+    lateinit var mAdapter: StudentAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,5 +29,15 @@ class MainActivity : AppCompatActivity() {
         mStudentList.add(Student("채명호", 1973))
         mStudentList.add(Student("최원종", 1967))
         mStudentList.add(Student("최윤정", 1987))
+
+
+        // 나중에 담아준다던 mAdapter 에 실제 어댑터 대입
+        mAdapter = StudentAdapter(this, R.layout.student_list_item, mStudentList)
+
+        // 리스트뷰의 어댑터로써 => mAdapter를 지정.
+        studentListView.adapter = mAdapter
+
+
+
     }
 }
